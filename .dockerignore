@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+**/.vscode/
+**/.DS_Store
+.git
+.gitignore
+README.md
+Dockerfile.render
