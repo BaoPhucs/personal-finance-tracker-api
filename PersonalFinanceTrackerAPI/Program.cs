@@ -97,7 +97,7 @@ namespace PersonalFinanceTrackerAPI
             {
                 options.AddPolicy("AllowFrontend", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5173", "https://personal-finance-tracker-frontend-dfvkdmp70.vercel.app/")
+                    policy.WithOrigins("http://localhost:5173", "https://personal-finance-tracker-frontend-dfvkdmp70.vercel.app")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });
