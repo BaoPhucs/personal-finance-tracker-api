@@ -9,7 +9,7 @@ using System.Security.Claims;
 namespace PersonalFinanceTrackerAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [Authorize]
     public class ExportController : ControllerBase
     {

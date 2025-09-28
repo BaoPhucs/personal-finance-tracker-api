@@ -10,7 +10,7 @@ namespace PersonalFinanceTrackerAPI.Controllers
 {
     
         [ApiController]
-        [Route("api/[controller]")]
+        [Route("[controller]")]
         [Authorize]
         public class TransactionsController : ControllerBase
         {
