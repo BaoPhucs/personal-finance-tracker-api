@@ -14,12 +14,18 @@ namespace PersonalFinanceTrackerAPI
     {
         public static void Main(string[] args)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
 
             // Đăng ký DbContext
             var conn = configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(conn));
+            builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(conn, npgsqlOptions =>
+    {
+        npgsqlOptions.CommandTimeout(120); // tăng timeout lên 60 giây
+    }));
 
             // Đăng ký Repository
             builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -100,11 +106,13 @@ namespace PersonalFinanceTrackerAPI
             var app = builder.Build();
 
             // Pipeline
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI();
+            //}
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
             app.UseCors("AllowFrontend");
@@ -113,7 +121,7 @@ namespace PersonalFinanceTrackerAPI
             app.UseAuthorization();
 
             app.MapControllers();
-
+            app.MapGet("/", () => "Hello from Personal Finance Tracker API!");
             app.Run();
         }
     }

@@ -38,13 +38,14 @@ namespace PersonalFinanceTracker.API.Controllers
             {
                 Username = dto.Username,
                 Email = dto.Email,
-                Passwordhash = BCrypt.Net.BCrypt.HashPassword(dto.Passwordhash)
+                Passwordhash = BCrypt.Net.BCrypt.HashPassword(dto.Passwordhash),
+                Createdat = DateTime.UtcNow
             };
 
             await _userRepo.AddAsync(user);
             await _userRepo.SaveChangesAsync();
 
-            var userDto = new UserDto { Id = user.Id, Username = user.Username, Email = user.Email, CreatedAt = user.Createdat.Value };
+            var userDto = new UserDto { Id = user.Id, Username = user.Username, Email = user.Email, CreatedAt = user.Createdat ?? DateTime.UtcNow };
             return Ok(userDto);
         }
 
